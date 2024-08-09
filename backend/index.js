@@ -20,7 +20,7 @@ const app = express()
 // to make input as json
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }))
+app.use(cors({ origin: [process.env.ORIGIN], credentials: true }))
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running on port 3000")
@@ -30,8 +30,8 @@ app.listen(process.env.PORT, () => {
 import authRouter from "./routes/auth.route.js"
 import noteRouter from "./routes/note.route.js"
 
-app.use("/api/auth", authRouter)
-app.use("/api/note", noteRouter)
+app.use(process.env.HOST, authRouter)
+app.use(process.env.HOST, noteRouter)
 
 // error handling
 app.use((err, req, res, next) => {
